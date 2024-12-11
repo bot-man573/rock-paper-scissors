@@ -1,11 +1,10 @@
-import * as mod from "https://deno.land/std@0.224.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
-Deno.serve(request => {
-  const url = new URL(request.url);
+const handler = async (req) => {
+    return new Response("じゃんけんゲームへようこそ!", {
+        headers: { "content-type": "text/html" },
+    });
+};
 
-  if(url.pathname.startsWith("/static")) {
-    return serveDir(request, { fsRoot: "./static", urlRoot: "static"});
-  }
-
-  return serveDir(request, { fsRoot: "./pages", urlRoot: ""});
-});
+console.log("HTTP webserver running. Access it at: http://localhost:8000/");
+await serve(handler, { port: 8000 });
